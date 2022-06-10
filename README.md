@@ -60,6 +60,7 @@ Policies can be specified using the [Group Policy templates on Windows](https://
 | **[`ExtensionUpdate`](#extensionupdate)** | Control extension updates.
 | **[`FirefoxHome`](#firefoxhome)** | Customize the Firefox Home page.
 | **[`FlashPlugin (Deprecated)`](#flashplugin-deprecated)** | Configure the default Flash plugin policy as well as origins for which Flash is allowed.
+| **[`GoToIntranetSiteForSingleWordEntryInAddressBar`](#gotointranetsiteforsinglewordentryinaddressbar)** | Force direct intranet site navigation instead of searching on single word entries in the Address Bar.
 | **[`Handlers`](#handlers)** | Configure default application handlers.
 | **[`HardwareAcceleration`](#hardwareacceleration)** | Control hardware acceleration.
 | **[`Homepage`](#homepage)** | Configure the default homepage and how Firefox starts.
@@ -2842,6 +2843,30 @@ Value (string):
   }
 }
 ```
+### GoToIntranetSiteForSingleWordEntryInAddressBar
+Whether to always go through the DNS server before sending a single word search string to a search engine. If it is a valid host, it will navigate to the website, otherwise it will attempt to search the term. 
+
+The second result in the URL bar will be a search result to allow users to conduct a web search exactly as it was entered.
+
+If you want to enable the ability to have your domain appear as a valid URL without resolving a failed page load with a search, add the pref `browser.fixup.domainwhitelist.YOUR_DOMAIN`, and set the pref to a value of `true`. The URL bar will suggest `YOUR_DOMAIN` when the user begins to type `YOUR_DOMAIN`. If the user attempts to load that domain and it fails to load, it will show an error page rather than use the term in a search.
+
+You can also whitelist a domain suffix that is not part of the [Public Suffix List](https://publicsuffix.org/) by adding the pref  `browser.fixup.domainsuffixwhitelist.YOUR_DOMAIN_SUFFIX` with a value of `true`. 
+
+Additionally, if you want users to see a "Did you mean to go to 'YOUR_DOMAIN'" prompt below the URL bar if they land on a search results page instead of `YOUR_DOMAIN`, set the pref `browser.urlbar.dnsResolveSingleWordsAfterSearch` to `1`.
+
+**Compatibility:** Firefox 104, Firefox ESR ??.?\
+**CCK2 Equivalent:** N/A\
+**Preferences Affected:** `browser.fixup.dns_first_for_single_words`
+
+#### policies.json
+```
+{
+  "policies": {
+    "GoToIntranetSiteForSingleWordEntryInAddressBar": true | false
+  }
+}
+```
+
 ### Handlers
 Configure default application handlers. This policy is based on the internal format of `handlers.json`.
 
